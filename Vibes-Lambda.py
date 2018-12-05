@@ -5,6 +5,7 @@ import random
 
 checker = True
 
+from jokes import joke
 
 # --------------- Helpers that build all of the responses ----------------------
 
@@ -59,26 +60,24 @@ def get_happy_response():
         return build_response(session_attributes, build_speechlet_response(
             card_title, speech_output, reprompt_text, should_end_session))
 
-if checker == False:
-    def get_joke_response():
-        session_attributes = {}
-        card_title = "joke"
-    
-        jokes = ['Did you hear about the crook who stole a calendar? He got twelve months.', 'I own the world’s worst thesaurus. Not only is it awful, it’s awful.', 'So what if I don’t know what “Armageddon” means? It’s not the end of the world.']
-    
-        speech_output = jokes[random.randint(0,len(jokes)-1)]
-        reprompt_text = "Hey! if you are still there, would you like to listen to a joke?"
-        should_end_session = False
-        return build_response(session_attributes, build_speechlet_response(
-            card_title, speech_output, reprompt_text, should_end_session))
-    def get_day_response():
-        session_attributes = {}
-        card_title = "day"
-        speech_output = "I am here to listen!"
-        reprompt_text = "Hey! if you are still there, would you like to listen to a joke?"
-        should_end_session = False
-        return build_response(session_attributes, build_speechlet_response(
-            card_title, speech_output, reprompt_text, should_end_session))
+def get_joke_response():
+    session_attributes = {}
+    card_title = "joke"
+
+        
+    speech_output = joke()
+    reprompt_text = "Hey! if you are still there, would you like to listen to a joke?"
+    should_end_session = False
+    return build_response(session_attributes, build_speechlet_response(
+        card_title, speech_output, reprompt_text, should_end_session))
+def get_day_response():
+    session_attributes = {}
+    card_title = "day"
+    speech_output = "I am here to listen!"
+    reprompt_text = "Hey! if you are still there, would you like to listen to a joke?"
+    should_end_session = False
+    return build_response(session_attributes, build_speechlet_response(
+        card_title, speech_output, reprompt_text, should_end_session))
     
     
             
