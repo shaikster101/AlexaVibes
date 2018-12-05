@@ -40,12 +40,21 @@ def build_response(session_attributes, speechlet_response):
 
 # --------------- Functions that control the skill's behavior ------------------------------------------
 def get_sad_response():
-       
         session_attributes = {}
         card_title = "sad"
         checker == False
         speech_output = "Would you like to talk about your day or do you want to hear a joke?"
         reprompt_text = "Hey! if you are still there, would you like to hear a joke?"
+        should_end_session = False
+        return build_response(session_attributes, build_speechlet_response(
+            card_title, speech_output, reprompt_text, should_end_session))
+
+def get_help_response():
+        session_attributes = {}
+        card_title = "help"
+        checker == False
+        speech_output = "You can ask for jokes, meditation session, motivational quotes and uplifing news or you can talk to me about your day"
+        reprompt_text = "Do you still need help"
         should_end_session = False
         return build_response(session_attributes, build_speechlet_response(
             card_title, speech_output, reprompt_text, should_end_session))
@@ -55,6 +64,16 @@ def get_happy_response():
         card_title = "day"
         checker == True
         speech_output = "That is awesome to hear? Would you like to uplifing news to brighten your day?"
+        reprompt_text = "Hey! if you are still there, would you like to listen to uplifiting news?"
+        should_end_session = False
+        return build_response(session_attributes, build_speechlet_response(
+            card_title, speech_output, reprompt_text, should_end_session))
+
+def get_unmotivated_response():
+        session_attributes = {}
+        card_title = "unmotivated"
+        checker == True
+        speech_output = "It sounds like you might be feeling unmotivated. Is there anything I can do to help?"
         reprompt_text = "Hey! if you are still there, would you like to listen to uplifiting news?"
         should_end_session = False
         return build_response(session_attributes, build_speechlet_response(
@@ -144,7 +163,7 @@ def on_intent(intent_request, session):
     elif intent_name == "happy":
         return get_happy_response()
     elif intent_name == "AMAZON.HelpIntent":
-        return get_welcome_response()
+        return get_help_response()
     elif intent_name == "AMAZON.CancelIntent" or intent_name == "AMAZON.StopIntent":
         return handle_session_end_request()
     else:
