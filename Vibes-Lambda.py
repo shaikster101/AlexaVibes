@@ -49,6 +49,16 @@ def get_sad_response():
         return build_response(session_attributes, build_speechlet_response(
             card_title, speech_output, reprompt_text, should_end_session))
 
+def get_stressed_response():
+        session_attributes = {}
+        card_title = "stressed"
+        checker == False
+        speech_output = "You seem to be stressed, you should try the pomodoro method. Say start pomodoro method to begin"
+        reprompt_text = "Hey! are you still there?"
+        should_end_session = False
+        return build_response(session_attributes, build_speechlet_response(
+            card_title, speech_output, reprompt_text, should_end_session))
+
 def get_help_response():
         session_attributes = {}
         card_title = "help"
@@ -162,6 +172,10 @@ def on_intent(intent_request, session):
         return get_day_response()
     elif intent_name == "happy":
         return get_happy_response()
+    elif intent_name == "unmotivated":
+        return get_unmotivated_response()
+    elif intent_name == "stressed":
+        return get_stressed_response()
     elif intent_name == "AMAZON.HelpIntent":
         return get_help_response()
     elif intent_name == "AMAZON.CancelIntent" or intent_name == "AMAZON.StopIntent":
