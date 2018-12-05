@@ -1,6 +1,10 @@
 from __future__ import print_function
 import random
 
+#checker True = happy, false == sad 
+
+checker = True
+
 
 # --------------- Helpers that build all of the responses ----------------------
 
@@ -35,53 +39,49 @@ def build_response(session_attributes, speechlet_response):
 
 # --------------- Functions that control the skill's behavior ------------------------------------------
 def get_sad_response():
-   
-    session_attributes = {}
-    card_title = "sad"
-    speech_output = "Would you like to talk about your day or do you want to hear a joke?"
-    reprompt_text = "Hey! if you are still there, would you like to hear a joke?"
-    should_end_session = False
-    return build_response(session_attributes, build_speechlet_response(
-        card_title, speech_output, reprompt_text, should_end_session))
+       
+        session_attributes = {}
+        card_title = "sad"
+        checker == False
+        speech_output = "Would you like to talk about your day or do you want to hear a joke?"
+        reprompt_text = "Hey! if you are still there, would you like to hear a joke?"
+        should_end_session = False
+        return build_response(session_attributes, build_speechlet_response(
+            card_title, speech_output, reprompt_text, should_end_session))
+            
+def get_happy_response():
+        session_attributes = {}
+        card_title = "day"
+        checker == True
+        speech_output = "That is awesome to hear? Would you like to uplifing news to brighten your day?"
+        reprompt_text = "Hey! if you are still there, would you like to listen to uplifiting news?"
+        should_end_session = False
+        return build_response(session_attributes, build_speechlet_response(
+            card_title, speech_output, reprompt_text, should_end_session))
 
-def build_audio_response(url):
-    return {
-        "version": "1.01",
-        "response": {
-            "directives": [
-                {
-                    "type": "AudioPlayer.Play",
-                    "playBehavior": "REPLACE_ALL",
-                    "audioItem": {
-                        "stream": {
-                            "token": "12345",
-                            "url": url,
-                            "offsetInMilliseconds": 0
-                        }
-                    }
-                }
-            ],
-            "shouldEndSession": False
-        }
-    }
-
-def play_music(intent, session):
-    url = "https://s3-eu-west-1.amazonaws.com/bucket/filename.mp3"
-    return build_audio_response(url)
-
-def get_joke_response():
+if checker == False:
+    def get_joke_response():
+        session_attributes = {}
+        card_title = "joke"
     
-    session_attributes = {}
-    card_title = "joke"
-
-    jokes = ['Did you hear about the crook who stole a calendar? He got twelve months.', 'I own the world’s worst thesaurus. Not only is it awful, it’s awful.', 'So what if I don’t know what “Armageddon” means? It’s not the end of the world.']
-
-    speech_output = jokes[random.randint(0,len(jokes)-1)]
-    reprompt_text = "Hey! if you are still there, would you like to listen to a joke?"
-    should_end_session = False
-    return build_response(session_attributes, build_speechlet_response(
-        card_title, speech_output, reprompt_text, should_end_session))
-
+        jokes = ['Did you hear about the crook who stole a calendar? He got twelve months.', 'I own the world’s worst thesaurus. Not only is it awful, it’s awful.', 'So what if I don’t know what “Armageddon” means? It’s not the end of the world.']
+    
+        speech_output = jokes[random.randint(0,len(jokes)-1)]
+        reprompt_text = "Hey! if you are still there, would you like to listen to a joke?"
+        should_end_session = False
+        return build_response(session_attributes, build_speechlet_response(
+            card_title, speech_output, reprompt_text, should_end_session))
+    def get_day_response():
+        session_attributes = {}
+        card_title = "day"
+        speech_output = "I am here to listen!"
+        reprompt_text = "Hey! if you are still there, would you like to listen to a joke?"
+        should_end_session = False
+        return build_response(session_attributes, build_speechlet_response(
+            card_title, speech_output, reprompt_text, should_end_session))
+    
+    
+            
 def get_welcome_response():
     """ If we wanted to initialize the session to have some attributes we could
     add those here
@@ -135,10 +135,12 @@ def on_intent(intent_request, session):
     # Dispatch to your skill's intent handlers using simple 
     if intent_name == "sad":
         return get_sad_response() 
-    elif intent_name =="song":
-        return play_music(intent, session)
     elif intent_name == "joke":
         return get_joke_response()  
+    elif intent_name == "day":
+        return get_day_response()
+    elif intent_name == "happy":
+        return get_happy_response()
     elif intent_name == "AMAZON.HelpIntent":
         return get_welcome_response()
     elif intent_name == "AMAZON.CancelIntent" or intent_name == "AMAZON.StopIntent":
