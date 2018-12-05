@@ -1,6 +1,6 @@
 from __future__ import print_function
 import random
-
+import time
 #checker True = happy, false == sad 
 
 checker = True
@@ -70,11 +70,14 @@ def get_joke_response():
     should_end_session = False
     return build_response(session_attributes, build_speechlet_response(
         card_title, speech_output, reprompt_text, should_end_session))
+
+
 def get_day_response():
     session_attributes = {}
     card_title = "day"
+
     speech_output = "I am here to listen!"
-    reprompt_text = "Hey! if you are still there, would you like to listen to a joke?"
+    reprompt_text = "hmmmm, I see"
     should_end_session = False
     return build_response(session_attributes, build_speechlet_response(
         card_title, speech_output, reprompt_text, should_end_session))
