@@ -1,8 +1,5 @@
 import random
 
-
-
-
 jokes = ['Did you hear about the crook who stole a calendar? He got twelve months.',
 'I own the world’s worst thesaurus. Not only is it awful, it’s awful.',
 'Why do Dasher and Dancer love coffee? They’re Santa’s star bucks!',
