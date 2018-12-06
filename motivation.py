@@ -19,6 +19,7 @@ motivation = [
 ]
 
 
-def joke():
-    quote = motivation[random.randint(0,len(motivation)-1)]
-    return quote
+
+def quotes():
+    answer = motivation[random.randint(0,len(motivation)-1)]
+    return answer
