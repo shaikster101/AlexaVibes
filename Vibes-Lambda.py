@@ -3,11 +3,13 @@ import random
 import time
 #checker True = happy, false == sad 
 
-checker = True
-
 from jokes import joke
+from motivationQuotes import quotes
+
 
 # --------------- Helpers that build all of the responses ----------------------
+
+
 
 def build_speechlet_response(title, output, reprompt_text, should_end_session):
     return {
@@ -29,6 +31,7 @@ def build_speechlet_response(title, output, reprompt_text, should_end_session):
         'shouldEndSession': should_end_session
     }
 
+
 def build_response(session_attributes, speechlet_response):
     return {
         'version': '1.0',
@@ -42,7 +45,6 @@ def build_response(session_attributes, speechlet_response):
 def get_sad_response():
         session_attributes = {}
         card_title = "sad"
-        checker == False
         speech_output = "Would you like to talk about your day or do you want to hear a joke?"
         reprompt_text = "Hey! if you are still there, would you like to hear a joke?"
         should_end_session = False
@@ -52,8 +54,7 @@ def get_sad_response():
 def get_stressed_response():
         session_attributes = {}
         card_title = "stressed"
-        checker == False
-        speech_output = "You seem to be stressed, you should try the pomodoro method. Say start pomodoro method to begin"
+        speech_output = "You seem to be stressed, you should try the CAPS session. Say start CAPS to begin"
         reprompt_text = "Hey! are you still there?"
         should_end_session = False
         return build_response(session_attributes, build_speechlet_response(
@@ -62,7 +63,6 @@ def get_stressed_response():
 def get_help_response():
         session_attributes = {}
         card_title = "help"
-        checker == False
         speech_output = "You can ask for jokes, meditation session, motivational quotes and uplifing news or you can talk to me about your day"
         reprompt_text = "Do you still need help"
         should_end_session = False
@@ -72,7 +72,6 @@ def get_help_response():
 def get_happy_response():
         session_attributes = {}
         card_title = "day"
-        checker == True
         speech_output = "That is awesome to hear? Would you like to uplifing news to brighten your day?"
         reprompt_text = "Hey! if you are still there, would you like to listen to uplifiting news?"
         should_end_session = False
@@ -82,8 +81,7 @@ def get_happy_response():
 def get_unmotivated_response():
         session_attributes = {}
         card_title = "unmotivated"
-        checker == True
-        speech_output = "It sounds like you might be feeling unmotivated. Is there anything I can do to help?"
+        speech_output = "You seem to be feeling unmotivated. " +  quotes()
         reprompt_text = "Hey! if you are still there, would you like to listen to uplifiting news?"
         should_end_session = False
         return build_response(session_attributes, build_speechlet_response(
@@ -91,9 +89,7 @@ def get_unmotivated_response():
 
 def get_joke_response():
     session_attributes = {}
-    card_title = "joke"
-
-        
+    card_title = "joke"        
     speech_output = joke()
     reprompt_text = "Hey! if you are still there, would you like to listen to a joke?"
     should_end_session = False
@@ -110,6 +106,16 @@ def get_day_response():
     should_end_session = False
     return build_response(session_attributes, build_speechlet_response(
         card_title, speech_output, reprompt_text, should_end_session))
+        
+def get_caps_response():
+    session_attributes = {}
+    card_title = "caps"
+
+    speech_output = "Slow down. Take a deep breath.                            Now list what you see"
+    reprompt_text = ""
+    should_end_session = False
+    return build_response(session_attributes, build_speechlet_response(
+        card_title, speech_output, reprompt_text, should_end_session))
     
     
             
@@ -117,9 +123,10 @@ def get_welcome_response():
     """ If we wanted to initialize the session to have some attributes we could
     add those here
     """
+    
     session_attributes = {}
     card_title = "Welcome"
-    speech_output = "Hi! How are you feeling today?"
+    speech_output = "Hi! How are you feeling today? I am here to help"
     # If the user either does not reply to the welcome message or says something
     # that is not understood, they will be prompted again with this text.
     reprompt_text = "Are you there? How are you feeling?"
@@ -180,6 +187,8 @@ def on_intent(intent_request, session):
         return get_help_response()
     elif intent_name == "AMAZON.CancelIntent" or intent_name == "AMAZON.StopIntent":
         return handle_session_end_request()
+    elif intent_name == 'caps':
+        return get_caps_response()
     else:
         raise ValueError("Invalid intent")
 
@@ -200,7 +209,6 @@ def lambda_handler(event, context):
     etc.) The JSON body of the request is provided in the event parameter.
     """
     print("Incoming request...")
-
     """
     Uncomment this if statement and populate with your skill's application ID to
     prevent someone else from configuring a skill that sends requests to this
